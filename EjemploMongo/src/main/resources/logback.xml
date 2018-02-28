@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="DEV_HOME" value="/Users/fran/Documentos/WS_Azarquiel/EjemploMongo" />
+	<appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+		<file>${DEV_HOME}/pruebaMongo.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d [%thread] %-5level  %logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<root level="TRACE">
+		<appender-ref ref="fileAppender" />
+	</root>
+</configuration>
