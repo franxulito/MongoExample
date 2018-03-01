@@ -20,6 +20,12 @@ import com.fran.persistence.DaoFactory;
 import com.fran.persistence.MongoDAOFactory;
 import com.mongodb.BasicDBObject;
 
+/**
+ * @author fran
+ * 
+ * URL: http://localhost:8080/EjemploMongo/HelloMongo
+ *
+ */
 public class InitServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Logger LOGGER = LoggerFactory.getLogger(InitServlet.class);
@@ -36,17 +42,27 @@ public class InitServlet extends HttpServlet {
 		}
 		
 		DAO dao = factory.getMongoDAO();
+		
+		// Insert
 		/*try {
 			dao.insertMany(DBConfig.getInstance().getCollectionName());
 		} catch (DAOException e) {
 			LOGGER.error("Error en el insert.", e);
 		}*/
 		
+		// Update
 		/*try {
 			dao.update(DBConfig.getInstance().getCollectionName(), new BasicDBObject("age", new BasicDBObject("$eq", 25)));
 		} catch (DAOException e) {
 			LOGGER.error("Error en el insert.", e);
 		}*/
+		
+		// Delete
+		try {
+		dao.delete(DBConfig.getInstance().getCollectionName(), new BasicDBObject("age", new BasicDBObject("$eq", 25)));
+		} catch (DAOException e) {
+			LOGGER.error("Error en el insert.", e);
+		}
 		
 		List<Document> result = null;
 		try {

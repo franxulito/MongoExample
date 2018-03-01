@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import com.fran.config.DBConfig;
 import com.fran.exception.DAOException;
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -34,8 +33,8 @@ public class MongoDAO implements DAO {
 	}
 
 	@Override
-	public Document selectFirstElement(String collectionName) throws DAOException {
-		LOGGER.info("Obteniendo el primer elemento de la colección {}", collectionName);
+	public Document selectFirst(String collectionName) throws DAOException {
+		LOGGER.info("Obteniendo el primer documento de la colección {}", collectionName);
 		Document myDoc = null;
 		try (MongoClient client = MongoDAOFactory.createMongoClient()) {
 			MongoDatabase db = MongoDAOFactory.getMongoDataBase(client, DBConfig.getInstance().getDbName());
@@ -70,7 +69,7 @@ public class MongoDAO implements DAO {
 
 	@Override
 	public void insertOne(String collectionName) throws DAOException {
-		LOGGER.info("Insertando un elemento en la colección {}", collectionName);
+		LOGGER.info("Insertando un documento en la colección {}", collectionName);
 		Document document = new Document("name", "fran").append("age", 27);
 		
 		try (MongoClient client = MongoDAOFactory.createMongoClient()){
@@ -79,7 +78,7 @@ public class MongoDAO implements DAO {
 			
 			collection.insertOne(document);
 		} catch (Exception e) {
-			throw new DAOException("Error obteniendo el primer elemento", e);
+			throw new DAOException("Error insertando un documento", e);
 		}
 		
 	}
@@ -94,34 +93,41 @@ public class MongoDAO implements DAO {
 		document = new Document("name", "pepe").append("age", 25);
 		list.add(document);
 		
-		LOGGER.info("Insertando varios elementos en la colección {}", collectionName);
+		LOGGER.info("Insertando varios documentos en la colección {}", collectionName);
 		try (MongoClient client = MongoDAOFactory.createMongoClient()){
 			MongoDatabase db = MongoDAOFactory.getMongoDataBase(client, DBConfig.getInstance().getDbName());
 			MongoCollection<Document> collection = MongoDAOFactory.getMongoColletion(db, collectionName);
 			
 			collection.insertMany(list);
 		} catch (Exception e) {
-			throw new DAOException("Error obteniendo el primer elemento", e);
+			throw new DAOException("Error insertando documentos", e);
 		}
 	}
 	
 	@Override
 	public void update(String collectionName, Bson where) throws DAOException {		
-		LOGGER.info("Actualizando varios elementos en la colección {}", collectionName);
+		LOGGER.info("Actualizando varios documentos en la colección {}", collectionName);
 		try (MongoClient client = MongoDAOFactory.createMongoClient()){
 			MongoDatabase db = MongoDAOFactory.getMongoDataBase(client, DBConfig.getInstance().getDbName());
 			MongoCollection<Document> collection = MongoDAOFactory.getMongoColletion(db, collectionName);
 			
 			collection.updateMany(where, new Document("$set", new Document("name", "prueba")));
 		} catch (Exception e) {
-			throw new DAOException("Error obteniendo el primer elemento", e);
+			throw new DAOException("Error actualizando documentos", e);
 		}
 	}
 
 	@Override
-	public void delete(MongoCollection<Document> collection) throws DAOException {
-		// TODO Auto-generated method stub
-		
+	public void delete(String collectionName, Bson where) throws DAOException {
+		LOGGER.info("Actualizando varios documentos en la colección {}", collectionName);
+		try (MongoClient client = MongoDAOFactory.createMongoClient()){
+			MongoDatabase db = MongoDAOFactory.getMongoDataBase(client, DBConfig.getInstance().getDbName());
+			MongoCollection<Document> collection = MongoDAOFactory.getMongoColletion(db, collectionName);
+			
+			collection.deleteMany(where);
+		} catch (Exception e) {
+			throw new DAOException("Error borrando documentos", e);
+		}
 	}
 
 
