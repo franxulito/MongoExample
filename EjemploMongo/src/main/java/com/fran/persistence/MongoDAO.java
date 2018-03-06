@@ -53,7 +53,7 @@ public class MongoDAO implements DAO {
 		
 		List<Document> list = new ArrayList<>();
 		FindIterable<Document> myDoc = null;
-		try (MongoClient client = MongoDAOFactory.createMongoClient()){
+		try (MongoClient client = MongoDAOFactory.createMongoClient()) {
 			MongoDatabase db = MongoDAOFactory.getMongoDataBase(client, DBConfig.getInstance().getDbName());
 			MongoCollection<Document> collection = MongoDAOFactory.getMongoColletion(db, collectionName);
 			

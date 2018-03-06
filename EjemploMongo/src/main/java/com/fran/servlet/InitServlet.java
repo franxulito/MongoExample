@@ -24,6 +24,8 @@ import com.mongodb.BasicDBObject;
  * @author fran
  * 
  * URL: http://localhost:8080/EjemploMongo/HelloMongo
+ * Ver los logs: tail -f rutaFichero
+ * Para cambiar la ruta donde se dejan los logs, en resources, el fichero logback.xml.
  *
  */
 public class InitServlet extends HttpServlet {
@@ -44,11 +46,11 @@ public class InitServlet extends HttpServlet {
 		DAO dao = factory.getMongoDAO();
 		
 		// Insert
-		/*try {
+		try {
 			dao.insertMany(DBConfig.getInstance().getCollectionName());
 		} catch (DAOException e) {
 			LOGGER.error("Error en el insert.", e);
-		}*/
+		}
 		
 		// Update
 		/*try {
@@ -58,11 +60,11 @@ public class InitServlet extends HttpServlet {
 		}*/
 		
 		// Delete
-		try {
+		/*try {
 		dao.delete(DBConfig.getInstance().getCollectionName(), new BasicDBObject("age", new BasicDBObject("$eq", 25)));
 		} catch (DAOException e) {
 			LOGGER.error("Error en el insert.", e);
-		}
+		}*/
 		
 		List<Document> result = null;
 		try {

@@ -31,6 +31,25 @@ public abstract class DaoFactory {
 			throw new DAOException("Error during the conversion", e);
 		}
 		LOGGER.info("Instance for {} is getted well", className);
+		/*
+		// Si no quisierais hacer el instanciado por reflexión, tendríais que definir un switch con
+		// una serie de opciones. Ejemplo:
+		int valorQueRecibo = 1;
+		switch (valorQueRecibo) {
+			case 1:
+					// Por ejemplo instancio la factoría de mongo
+					factory = new MongoDAOFactory();
+				break;
+			case 2:
+				// Instancio otro tipo de factoria. Por supuesto, en este ejemplo, esa implementación
+				// no existe. Pero así creo que queda más claro.
+				factory = new OracleDAOFactory();
+			break;
+	
+			default:
+				break;
+		}*/
+		
 		return factory;
 	}
 	
